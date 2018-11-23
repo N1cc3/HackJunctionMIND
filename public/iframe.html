@@ -1,0 +1,107 @@
+<html>
+<head>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
+    <script type="text/javascript">
+        /**
+         * Main method to be executed once SAPUI5 has been initialized.
+         */
+        var iframe;
+        var mypath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')+1);
+        var mytab;
+        var prereadyevents = []
+        function main() {
+            "use strict";
+            iframe = document.getElementById("myframe");
+            iframe.contentWindow.sap.ui.getCore().attachInit(() => {
+                var eventBus = iframe.contentWindow.sap.ui.getCore().getEventBus();
+                eventBus.subscribe("com.sap.ec.commif", "Connection.connected", (channel, eventname, event) => {
+                    mytab.contentWindow.commlib = iframe.contentWindow.com.sap.ec.commlib;
+                    mytab.contentWindow.eventbus = iframe.contentWindow.com.sap.ec.commlib.getEventBus();
+                    // Let's hope that it's ready allready :)
+                    mytab.contentWindow.load();
+                    writeEvent("CONNECTED to CPAAS Gateway");
+                });
+                eventBus.subscribe("com.sap.ec.commif", "Connection.disconnected", (channel, eventname, event) => {
+                    writeEvent("DISCONNECTED from CPAAS Gateway");
+                });
+
+
+                eventBus.subscribe("com.sap.ec.commif", "Device.*.connected", (channel, eventname, device) => {
+                    writeEvent("DEVICE CONNECTED: type["+device.getType()+"] state["+device.getState()+"] carrier["+device.getCarrier()+"]");                    
+                });
+                eventBus.subscribe("com.sap.ec.commif", "Device.*.disconnected", (channel, eventname, device) => {
+                    writeEvent("DEVICE DISCONNECTED: type["+device.getType()+"] state["+device.getState()+"] carrier["+device.getCarrier()+"]");                    
+                });
+
+                eventBus.subscribe("com.sap.ec.commif", "Contact.*.incoming", (channel, eventname, contact) => {
+                    writeEvent("CONTACT INCOMING: type["+contact.getLeg().getDevice().getType()+"] id["+contact.getId()+"] leg-state["+contact.getLeg().getState()+"]");
+                });
+
+                eventBus.subscribe("com.sap.ec.commif", "Contact.*.connected", (channel, eventname, contact) => {
+                    writeEvent("CONTACT CONNECTED: type["+contact.getLeg().getDevice().getType()+"] id["+contact.getId()+"] leg-state["+contact.getLeg().getState()+"]");
+                });
+
+                eventBus.subscribe("com.sap.ec.commif", "Contact.*.disconnected", (channel, eventname, contact) => {
+                    writeEvent("CONTACT DISCONNECTED: type["+contact.getLeg().getDevice().getType()+"] id["+contact.getId()+"] leg-state["+contact.getLeg().getState()+"]");
+                });
+            })            
+        }
+
+        function mainTab() {
+            mytab = document.getElementById("mytab");
+            $(document).ready(() => {
+                $(() => { $('#mytabwrap').draggable().resizable() });
+            });
+        }
+
+        function writeEvent(event) {
+            if (!mytab || !mytab.contentWindow.addEvent) {
+                prereadyevents.push(event);
+            } else {
+                mytab.contentWindow.addEvent(event);
+            }
+        }
+        $( function() {
+            $( "#mytabwrap" ).draggable().resizable();
+        } );
+    </script>
+    <style>
+        #mytabwrap {
+            padding: 10px;
+            width: 50%;
+            height: 20%;
+            bottom: 5px;
+            left: 0px;
+            background-color: #f60;
+            position: absolute;     
+            z-index: 1;
+        }
+        #mytab {
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+        }
+        #fioriframewrab {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>    
+    <div id="fioriframewrap">
+        <iframe id="myframe" src="/sites" height="100%" width="100%" frameborder="0" onload="main()">Your browser doesnot support iframes<a href="/sites"> click here to view the page directly. </a></iframe>
+    </div>
+    <div id="mytabwrap">
+        <iframe id="mytab" src="mytab.html" height="100%" width="100%" frameborder="0" onload="mainTab()">Your browser doesnot support iframes<a href="mytab.html"> click here to view the page directly. </a></iframe>
+    </div>
+</body>
+</html>
