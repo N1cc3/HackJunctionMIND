@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- Copyright (c) 2009-2014 SAP SE, All Rights Reserved -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <!--  version 0.2 -->
+    <title>Hackaton test</title>
+    <script type="text/javascript">
+        function load() {
+            var events = document.getElementById("events")
+            // Let's say I'm interested about video and phone devices..
+            commlib.getEventBus().subscribe("Connection.userstate", (channel, event, device) => {
+                events.innerHTML = 'User state changed ['+device.data+']<br>'+events.innerHTML
+            });
+
+            commlib.getEventBus().subscribe("Device.phone.connected", (channel, event, device) => {
+                events.innerHTML = 'DEVICE Connected: type [phone] state ['+device.data.getState()+'] carrier ['+device.data.getCarrier()+']<br>'+events.innerHTML
+            });
+            commlib.getEventBus().subscribe("Device.phone.disconnected", (channel, event, device) => {
+                events.innerHTML = 'DEVICE Disconnected: type [phone] state ['+device.data.getState()+'] carrier ['+device.data.getCarrier()+']<br>'+events.innerHTML
+            });
+            commlib.getEventBus().subscribe("Device.chat.connected", (channel, event, device) => {
+                events.innerHTML = 'DEVICE Connected: type [chat] state ['+device.data.getState()+'] carrier ['+device.data.getCarrier()+']<br>'+events.innerHTML
+            });
+            commlib.getEventBus().subscribe("Device.chat.disconnected", (channel, event, device) => {
+                events.innerHTML = 'DEVICE Disconnected: type [chat] state ['+device.data.getState()+'] carrier ['+device.data.getCarrier()+']<br>'+events.innerHTML
+            });
+
+            commlib.getEventBus().subscribe("Contact.phone.incoming", (channel, event, contact) => {
+                events.innerHTML = 'CONTACT Incoming: type [phone] id ['+contact.data.getId()+'] leg-state ['+contact.data.getLeg().getState()+']<br>'+events.innerHTML
+            });
+            commlib.getEventBus().subscribe("Contact.phone.connected", (channel, event, contact) => {
+                events.innerHTML = 'CONTACT Connected: type [phone] id ['+contact.data.getId()+'] leg-state ['+contact.data.getLeg().getState()+']<br>'+events.innerHTML;
+                
+            });
+            commlib.getEventBus().subscribe("Contact.phone.disconnected", (channel, event, contact) => {
+                events.innerHTML = 'CONTACT Disconnected: type [phone] id ['+contact.data.getId()+'] leg-state ['+contact.data.getLeg().getState()+']<br>'+events.innerHTML
+            });
+            commlib.getEventBus().subscribe("Contact.chat.incoming", (channel, event, contact) => {
+                events.innerHTML = 'CONTACT Incoming: type [chat] id ['+contact.data.getId()+'] leg-state ['+contact.data.getLeg().getState()+']<br>'+events.innerHTML
+            });
+            commlib.getEventBus().subscribe("Contact.chat.connected", (channel, event, contact) => {
+                events.innerHTML = 'CONTACT Connected: type [chat] id ['+contact.data.getId()+'] leg-state ['+contact.data.getLeg().getState()+']<br>'+events.innerHTML
+            });
+            commlib.getEventBus().subscribe("Contact.chat.disconnected", (channel, event, contact) => {
+                
+                events.innerHTML = 'CONTACT Disconnected: type [chat] id ['+contact.data.getId()+'] leg-state ['+contact.data.getLeg().getState()+']<br>'+events.innerHTML
+            });            
+        }
+
+        window.onload = load;
+
+        function addEvent(event) {
+            events.innerHTML = event + "<br>"+events.innerHTML;
+        }
+
+    </script>
+</head>
+
+<body>
+    <H1>TESTING!!!</H1>
+    <div id="events">
+
+    </div>
+</body>
+</html>
