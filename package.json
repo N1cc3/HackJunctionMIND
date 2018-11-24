@@ -16,6 +16,7 @@
     "@google-cloud/translate": "^2.1.2",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "recastai": "^4.0.0",
     "superagent": "^4.0.0"
   }
 }
