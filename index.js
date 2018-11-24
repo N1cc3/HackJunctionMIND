@@ -45,7 +45,6 @@ app.get("/translate/:text", (req, res) => {
 
 	let sourceLang;
 
-	let result = '';
 	// Translates some text into Russian
 	translate
 		.translate(text, target)
@@ -62,10 +61,22 @@ app.get("/translate/:text", (req, res) => {
 			} else {
 				result = translation;
 			}
+
+			translate
+				.translate(result, sourceLang)
+				.then(results => {
+					const translation = results[0];
+					console.log(`Translation: ${translation}`);
+					res.send(finalResult);
+				})
+				.catch(err => {
+					console.error('ERROR:', err);
+				});
 		})
-		.then(text, sourceLang)
 		.catch(err => {
 			console.error('ERROR:', err);
 		});
-	res.send(result);
+
+
+
 })
