@@ -6,13 +6,10 @@ const http = require("http")
 const BOT_TOKEN = '40d5fa3351bbc08183f3e9b3f92fba80'
 const superagent = require('superagent');
 const bodyParser = require("body-parser");
-<<<<<<< HEAD
 var recastai = require('recastai').default
 var request = new recastai.request(BOT_TOKEN, 'en')
 
-=======
 const junctionInfoMap = require("./resources/Data/JunctionInfo.json");
->>>>>>> a1b1268... Understanding intents and reacting to them
 
 // Imports the Google Cloud client library
 const {Translate} = require('@google-cloud/translate');
@@ -42,24 +39,10 @@ app.post("/test", (req,res) => {
 		.set('Authorization', 'Token ' + BOT_TOKEN)
 		.end(function(err, res) {
 			console.log(res);
-<<<<<<< HEAD
 		});
 
 	res.json({});
 })
-
-app.post("/test2", (req, res) => {
-	const originalMessage = req.body.nlp.source;
-	request.analyseText(originalMessage)
-	.then(function(res) {
-		console.log(res.raw)
-	})
-=======
-	});
-	res.json({});
->>>>>>> a1b1268... Understanding intents and reacting to them
-})
-
 
 app.post("/test2", (req, res) => {
 	const originalMessage = req.body.nlp.source;
