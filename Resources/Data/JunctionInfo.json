@@ -1,12 +1,12 @@
 {
     "event":"Junction",
     "year":"2018",
-    "geography":{
+    "location":{
         "city":"Helsinki",
-        "location":"Aalto University",
-        "adress":"Dipoli Otakaari 24, Otaniemi 02150 Espoo https://bit.ly/2zm8UjW",
+        "venue":"Aalto University, Dipoli",
+        "adress":"Otakaari 24, Otaniemi 02150 Espoo https://bit.ly/2zm8UjW",
         "metro":"Aalto University",
-        "how to get there":{
+        "directions":{
             "link":"https://live.hackjunction.com/location/",
             "by plane":"Take train or P towards Helsinki. At the last stop, the city Central station, switch to a metro, and head to Matinkyla direction, leave the train on Aalto university station",
             "by metro":"Take a ride to 'Alto university', there you will find Dipoli with ease as it is Lighted with purple Colors it is the easiest way https://bit.ly/2zm8UjW",
@@ -14,7 +14,7 @@
         }
     },
     "parking":"The venue does not have designated parking, but there are some nearby, you'd better come by public transport",
-    "time":{
+    "eventtime":{
         "month":"November",
         "date":"November 23-25",
         "start":"November 23 4:00pm",
