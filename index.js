@@ -55,7 +55,7 @@ app.get("/translate/:text", (req, res) => {
 			console.log(`Text: ${text}`);
 			console.log(`Translation: ${translation}`);
 
-			result = translation;
+			let result;
 			if (translation === "Hello") {
 				result = "How can I help you?";
 			} else {
@@ -65,9 +65,9 @@ app.get("/translate/:text", (req, res) => {
 			translate
 				.translate(result, sourceLang)
 				.then(results => {
-					const translation = results[0];
-					console.log(`Translation: ${translation}`);
-					res.send(finalResult);
+					const translationBack = results[0];
+					console.log(`Translation back: ${translationBack}`);
+					res.send(translationBack);
 				})
 				.catch(err => {
 					console.error('ERROR:', err);
