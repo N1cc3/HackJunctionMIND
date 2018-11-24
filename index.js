@@ -4,21 +4,38 @@ const serveStatic = require('serve-static')
 const port = process.env.PORT || 3000
 const http = require("http")
 
+const superagent = require('superagent');
+
+// Imports the Google Cloud client library
+const {Translate} = require('@google-cloud/translate');
+
+// Your Google Cloud Platform project ID
+const projectId = 'alien-paratext-223508';
+
+// Instantiates a client
+const translate = new Translate({
+	projectId: projectId,
+});
+
 app.use(serveStatic('public'))
 
 app.get("/disruption", (req,res) => {
 
 })
 
-app.get("/test", (req,res) => {
-	res.json({
-		"replies": [
-			{
-				"type": "text",
-				"content": "Test success!"
-			}
-		]
-	});
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.post("/test", (req,res) => {
+	const conversationId = req.body.conversation.id;
+
+	superagent
+		.post('https://api.recast.ai/connect/v1/conversations/'+conversationId+'/messages')
+		.send({messages: [{ type: 'text', content: 'test' }]})
+		.set('Authorization', 'Token 40d5fa3351bbc08183f3e9b3f92fba80')
+		.end(function(err, res) {
+			console.log(res);
+		});
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
