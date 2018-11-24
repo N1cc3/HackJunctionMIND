@@ -9,7 +9,7 @@ const bodyParser = require("body-parser");
 var recastai = require('recastai').default
 var request = new recastai.request(BOT_TOKEN, 'en')
 
-const junctionInfoMap = require("./resources/Data/JunctionInfo.js");
+const junctionInfoMap = require("./Resources/Data/JunctionInfo.js");
 
 // Imports the Google Cloud client library
 const {Translate} = require('@google-cloud/translate');
