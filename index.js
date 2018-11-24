@@ -37,6 +37,8 @@ app.post("/test", (req,res) => {
 		.end(function(err, res) {
 			console.log(res);
 		});
+
+		res.json({});
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
