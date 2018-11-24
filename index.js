@@ -32,7 +32,7 @@ app.post("/test", (req,res) => {
 
 	superagent
 		.post('https://api.recast.ai/connect/v1/conversations/'+conversationId+'/messages')
-		.send({messages: [{ type: 'text', content: 'test' }]})
+		.send({messages: [{ type: 'text', content: 'Hello World' }]})
 		.set('Authorization', 'Token 40d5fa3351bbc08183f3e9b3f92fba80')
 		.end(function(err, res) {
 			console.log(res);
