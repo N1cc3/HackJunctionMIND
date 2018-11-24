@@ -51,7 +51,7 @@ app.post("/test2", (req, res) => {
 	.then(function(res) {
 		const response = res.raw;
 		let intentsArray = response.intents;
-		if (intentsArray.length() == 0) {
+		if (intentsArray.size() == 0) {
 			sendMessageToChat(conversationId, 'I will forward you to the agent');
 		} else {
 			let confidenceMap = new Map();
