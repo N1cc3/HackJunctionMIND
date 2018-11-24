@@ -55,7 +55,7 @@ app.post("/test2", (req, res) => {
 			sendMessageToChat(conversationId, 'I will forward you to the agent');
 		} else {
 			intentsArray.sort((i1, i2) => i2.confidence - i1.confidence);
-			sendMessageToChat(conversationId, intentsArray[0].slug);
+			sendMessageToChat(conversationId, junctionInfoMap[intentsArray[0].slug]);
 		}
 	})
 })
