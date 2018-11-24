@@ -65,8 +65,9 @@ app.post("/test2", (req, res) => {
 			let mostPossibleIntention = confidenceMap.get(Math.max(...confidenceArray));
 			sendMessageToChat(conversationId, junctionInfoMap[mostPossibleIntention]);
 		}
-	})
-})
+	});
+	res.json({});
+});
 
 function sendMessageToChat(conversationId, message) {
 	superagent
@@ -77,8 +78,32 @@ function sendMessageToChat(conversationId, message) {
 			console.log(res);
 	});
 }
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
+app.post("/test2", (req, res) => {
+	const originalMessage = req.body.nlp.source;
+	const conversationId = req.body.conversation.id;
+	request.analyseText(originalMessage)
+	.then(function(res) {
+		const response = res.raw;
+		let intentsArray = response.intents;
+		if (intentsArray.length() == 0) {
+			sendMessageToChat(conversationId, 'I will forward you to the agent');
+		} else {
+			let confidenceMap = new Map();
+			let confidenceArray = [];
+			intentsArray.forEach(element => {
+				if (element.hasOwnProperty("confidence")) {
+					confidenceMap.set(element['confidence'], element['slug']);
+					confidenceArray.put(element['confidence']);
+				}	
+			});
+			let mostPossibleIntention = confidenceMap.get(Math.max(...confidenceArray));
+			sendMessageToChat(conversationId, junctionInfoMap[mostPossibleIntention]);
+		}
+	})
+})
+
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 app.get("/translate/:text", (req, res) => {
 
