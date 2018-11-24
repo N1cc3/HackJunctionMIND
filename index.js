@@ -5,6 +5,7 @@ const port = process.env.PORT || 3000
 const http = require("http")
 
 const superagent = require('superagent');
+const bodyParser = require("body-parser");
 
 // Imports the Google Cloud client library
 const {Translate} = require('@google-cloud/translate');
