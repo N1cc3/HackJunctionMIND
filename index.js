@@ -22,6 +22,8 @@ const translate = new Translate({
 	projectId: projectId,
 });
 
+const agentLang = 'en';
+
 app.use(serveStatic('public'))
 
 app.get("/disruption", (req,res) => {
@@ -47,27 +49,47 @@ app.post("/test", (req,res) => {
 app.post("/test2", (req, res) => {
 	const originalMessage = req.body.nlp.source;
 	const conversationId = req.body.conversation.id;
-	request.analyseText(originalMessage)
-	.then(function(res) {
-		const response = res.raw;
-		let intentsArray = response.intents;
-		if (intentsArray.length == 0) {
-			sendMessageToChat(conversationId, 'I will forward you to the agent');
-		} else {
-			intentsArray.sort((i1, i2) => i2.confidence - i1.confidence);
-			sendMessageToChat(conversationId, junctionInfoMap[intentsArray[0].slug]);
-		}
-	})
+
+	translate
+		.translate(text, agentLang)
+		.then(results => {
+			const sourceLang = results[1].data.translations[0].detectedSourceLanguage;
+			const translation = results[0];
+
+			request
+				.analyseText(translation)
+				.then(function(res) {
+					const response = res.raw;
+					let intentsArray = response.intents;
+					if (intentsArray.length == 0) {
+						sendMessageToChat(conversationId, 'I will forward you to the agent');
+					} else {
+						intentsArray.sort((i1, i2) => i2.confidence - i1.confidence);
+						sendMessageToChat(conversationId, junctionInfoMap[intentsArray[0].slug], sourceLang);
+					}
+				});
+		}).catch(err => {
+			console.error('ERROR:', err);
+		});
 })
 
-function sendMessageToChat(conversationId, message) {
-	superagent
-		.post('https://api.recast.ai/connect/v1/conversations/'+conversationId+'/messages')
-		.send({messages: [{ type: 'text', content: message }]})
-		.set('Authorization', 'Token ' + BOT_TOKEN)
-		.end(function(err, res) {
-			console.log(res);
-	});
+function sendMessageToChat(conversationId, message, lang) {
+	translate
+		.translate(message, lang)
+		.then(results => {
+			const translationBack = results[0];
+			console.log(`Translation back: ${translationBack}`);
+
+			superagent
+				.post('https://api.recast.ai/connect/v1/conversations/'+conversationId+'/messages')
+				.send({messages: [{ type: 'text', content: translationBack }]})
+				.set('Authorization', 'Token ' + BOT_TOKEN)
+				.end(function(err, res) {
+					console.log(res);
+				});
+		}).catch(err => {
+			console.error('ERROR:', err);
+		});
 }
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
