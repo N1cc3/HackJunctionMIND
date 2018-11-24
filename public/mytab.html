@@ -44,6 +44,14 @@
         commlib.getEventBus().subscribe("Contact.chat.disconnected", (channel, event, contact) => {
           events.innerHTML = 'CONTACT Disconnected: type [chat] id ['+contact.data.getId()+'] leg-state ['+contact.data.getLeg().getState()+']<br>'+events.innerHTML
         });
+
+        commlib.getEventBus().subscribe("Chat.*.message", (channel, event, contact) => {
+          events.innerHTML = 'Chat message: '+contact.data.content+'<br>'+events.innerHTML;
+          // TODO: Debug info, remove these at some point
+          console.log(channel);
+          console.log(event);
+          console.log(contact);
+        });
       }
 
       window.onload = load
