@@ -10,6 +10,10 @@ app.get("/disruption", (req,res) => {
 
 })
 
+app.get("/test", (req,res) => {
+	res.send('test');
+})
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 // Keep Heroku server alive
