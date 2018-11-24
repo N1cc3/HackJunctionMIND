@@ -1,7 +1,7 @@
 {
-  "name": "hackapp",
+  "name": "mind-bot",
   "version": "1.0.0",
-  "description": "Junction test app",
+  "description": "HackJunction2018 project by MIND",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,7 +10,7 @@
   "engines": {
     "node": "6.x"
   },
-  "author": "",
+  "author": "MIND",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4"
