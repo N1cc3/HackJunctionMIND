@@ -22,8 +22,3 @@ app.get("/test", (req,res) => {
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
-
-// Keep Heroku server alive
-setInterval(function() {
-	http.get(process.env.HEROKUAPP)
-}, 300000) // every 5 minutes
