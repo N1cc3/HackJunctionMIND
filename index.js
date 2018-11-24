@@ -59,7 +59,7 @@ app.post("/test2", (req, res) => {
 			intentsArray.forEach(element => {
 				if (element.hasOwnProperty("confidence")) {
 					confidenceMap.set(element['confidence'], element['slug']);
-					confidenceArray.put(element['confidence']);
+					confidenceArray.push(element['confidence']);
 				}
 			});
 			let mostPossibleIntention = confidenceMap.get(Math.max(...confidenceArray));
