@@ -13,6 +13,7 @@
   "author": "MIND",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/translate": "^2.1.2",
     "express": "^4.16.4"
   }
 }
