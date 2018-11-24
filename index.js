@@ -6,8 +6,8 @@ const http = require("http")
 const BOT_TOKEN = '40d5fa3351bbc08183f3e9b3f92fba80'
 const superagent = require('superagent');
 const bodyParser = require("body-parser");
-const request = new recastai.request(BOT_TOKEN, 'en')
-let recastai = require('recastai').default
+var recastai = require('recastai').default
+var request = new recastai.request(BOT_TOKEN, 'en')
 
 
 // Imports the Google Cloud client library
