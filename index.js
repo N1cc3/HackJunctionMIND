@@ -9,7 +9,7 @@ const bodyParser = require("body-parser");
 var recastai = require('recastai').default
 var request = new recastai.request(BOT_TOKEN, 'en')
 
-const junctionInfoMap = require("./resources/Data/JunctionInfo.json");
+const junctionInfoMap = require("./resources/Data/JunctionInfo.js");
 
 // Imports the Google Cloud client library
 const {Translate} = require('@google-cloud/translate');
@@ -60,7 +60,7 @@ app.post("/test2", (req, res) => {
 				if (element.hasOwnProperty("confidence")) {
 					confidenceMap.set(element['confidence'], element['slug']);
 					confidenceArray.put(element['confidence']);
-				}	
+				}
 			});
 			let mostPossibleIntention = confidenceMap.get(Math.max(...confidenceArray));
 			sendMessageToChat(conversationId, junctionInfoMap[mostPossibleIntention]);
