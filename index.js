@@ -43,18 +43,27 @@ app.get("/translate/:text", (req, res) => {
 	// The target language
 	const target = 'en';
 
+	let sourceLang;
+
 	let result = '';
 	// Translates some text into Russian
 	translate
 		.translate(text, target)
 		.then(results => {
+			sourceLang = results[1].data.translations[0].detectedSourceLanguage;
 			const translation = results[0];
 
 			console.log(`Text: ${text}`);
 			console.log(`Translation: ${translation}`);
 
 			result = translation;
+			if (translation === "Hello") {
+				result = "How can I help you?";
+			} else {
+				result = translation;
+			}
 		})
+		.then(text, sourceLang)
 		.catch(err => {
 			console.error('ERROR:', err);
 		});
