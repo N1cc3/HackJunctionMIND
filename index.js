@@ -54,16 +54,8 @@ app.post("/test2", (req, res) => {
 		if (intentsArray.length == 0) {
 			sendMessageToChat(conversationId, 'I will forward you to the agent');
 		} else {
-			let confidenceMap = new Map();
-			let confidenceArray = [];
-			intentsArray.forEach(element => {
-				if (element.hasOwnProperty("confidence")) {
-					confidenceMap.set(element['confidence'], element['slug']);
-					confidenceArray.push(element['confidence']);
-				}
-			});
-			let mostPossibleIntention = confidenceMap.get(Math.max(...confidenceArray));
-			sendMessageToChat(conversationId, junctionInfoMap[mostPossibleIntention]);
+			intentsArray.sort((i1, i2) => i2.confidence - i1.confidence);
+			sendMessageToChat(conversationId, intentsArray[0]);
 		}
 	})
 })
