@@ -62,7 +62,7 @@ app.post("/test2", (req, res) => {
 					const response = res.raw;
 					let intentsArray = response.intents;
 					if (intentsArray.length == 0) {
-						sendMessageToChat(conversationId, 'I will forward you to the agent');
+						sendMessageToChat(conversationId, 'I will forward you to the agent', sourceLang);
 					} else {
 						intentsArray.sort((i1, i2) => i2.confidence - i1.confidence);
 						sendMessageToChat(conversationId, junctionInfoMap[intentsArray[0].slug], sourceLang);
