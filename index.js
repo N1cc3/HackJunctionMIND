@@ -41,16 +41,7 @@ app.post("/test", (req,res) => {
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 
-// Imports the Google Cloud client library
-const {Translate} = require('@google-cloud/translate');
 
-// Your Google Cloud Platform project ID
-const projectId = 'alien-paratext-223508';
-
-// Instantiates a client
-const translate = new Translate({
-  projectId: projectId,
-});
 
 
 app.get("/translate/:text", (req, res) => {
