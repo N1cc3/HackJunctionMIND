@@ -11,7 +11,14 @@ app.get("/disruption", (req,res) => {
 })
 
 app.get("/test", (req,res) => {
-	res.send('test');
+	res.json({
+		"replies": [
+			{
+				"type": "text",
+				"content": "Test success!"
+			}
+		]
+	});
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
