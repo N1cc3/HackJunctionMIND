@@ -51,7 +51,7 @@ app.post("/test2", (req, res) => {
 	const conversationId = req.body.conversation.id;
 
 	translate
-		.translate(text, agentLang)
+		.translate(originalMessage, agentLang)
 		.then(results => {
 			const sourceLang = results[1].data.translations[0].detectedSourceLanguage;
 			const translation = results[0];
