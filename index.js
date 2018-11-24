@@ -31,23 +31,25 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.post("/test", (req,res) => {
-	// const conversationId = req.body.conversation.id;
+	const conversationId = req.body.conversation.id;
+
+	superagent
+		.post('https://api.recast.ai/connect/v1/conversations/'+conversationId+'/messages')
+		.send({messages: [{ type: 'text', content: 'Hello World' }]})
+		.set('Authorization', 'Token ' + BOT_TOKEN)
+		.end(function(err, res) {
+			console.log(res);
+		});
+
+	res.json({});
+})
+
+app.post("/test2", (req, res) => {
 	const originalMessage = req.body.nlp.source;
-	request.analyseText('Where is the event?')
+	request.analyseText(originalMessage)
 	.then(function(res) {
 		console.log(res.raw)
 	})
-
-
-	// superagent
-	// 	.post('https://api.recast.ai/connect/v1/conversations/'+conversationId+'/messages')
-	// 	.send({messages: [{ type: 'text', content: 'Hello World' }]})
-	// 	.set('Authorization', 'Token ' + BOT_TOKEN)
-	// 	.end(function(err, res) {
-	// 		console.log(res);
-	// 	});
-
-	res.json({});
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
