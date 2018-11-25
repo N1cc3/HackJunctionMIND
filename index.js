@@ -32,10 +32,6 @@ app.get("/disruption", (req,res) => {
 
 })
 
-app.get("/logdata", (req,res) => {
-	res.json(logs);
-})
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -49,7 +45,7 @@ app.post("/test2", (req, res) => {
 			const sourceLang = results[1].data.translations[0].detectedSourceLanguage;
 			const translation = results[0];
 
-			logs.push('Original message: ' + originalMessage);
+			logs.push('Original message: ' + {text: originalMessage, from: , to: });
 			logs.push('Translated message: ' + translation);
 
 			request
