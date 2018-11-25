@@ -79,7 +79,7 @@ function sendMessageToChat(conversationId, message, lang) {
 			const translationBack = results[0];
 
 			logs.push('Original answer: ' + message);
-			logs.push('Translated answer: ' + translationBack);
+			logs.push('Translated answer: ' + translationBack + '\n');
 
 			superagent
 				.post('https://api.recast.ai/connect/v1/conversations/'+conversationId+'/messages')
