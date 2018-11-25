@@ -58,8 +58,8 @@ app.post("/test2", (req, res) => {
 
 			request
 				.analyseText(translation)
-				.then(function(res) {
-					const response = res.raw;
+				.then(analysed => {
+					const response = analysed.raw;
 					let intentsArray = response.intents;
 					if (intentsArray.length == 0) {
 						sendMessageToChat(conversationId, 'I will forward you to the agent', sourceLang);
