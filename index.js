@@ -67,6 +67,7 @@ app.post("/test2", (req, res) => {
 						intentsArray.sort((i1, i2) => i2.confidence - i1.confidence);
 						sendMessageToChat(conversationId, junctionInfoMap[intentsArray[0].slug], sourceLang);
 					}
+					res.json({});
 				});
 		}).catch(err => {
 			console.error('ERROR:', err);
