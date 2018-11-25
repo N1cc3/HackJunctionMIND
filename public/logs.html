@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<title>Logs</title>
+	</head>
+	<body>
+		Chat logs:
+		<br>
+		<div id="logs">
+
+		</div>
+
+		<script type="text/javascript">
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.open( "GET", "https://mind-bot-2018.herokuapp.com/logdata", false );
+			xmlHttp.send( null );
+			let logs = JSON.parse(xmlHttp.responseText);
+			for (let log of logs) {
+				document.getElementById('logs').innerHTML += log + '<br>';
+			}
+		</script>
+	</body>
+</html>

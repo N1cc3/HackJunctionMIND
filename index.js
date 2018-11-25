@@ -24,10 +24,16 @@ const translate = new Translate({
 
 const agentLang = 'en';
 
+let logs = [];
+
 app.use(serveStatic('public'))
 
 app.get("/disruption", (req,res) => {
 
+})
+
+app.get("/logdata", (req,res) => {
+	res.json(logs);
 })
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -35,7 +41,6 @@ app.use(bodyParser.json());
 
 app.post("/test2", (req, res) => {
 	const originalMessage = req.body.nlp.source;
-	console.log(originalMessage);
 	const conversationId = req.body.conversation.id;
 
 	translate
@@ -43,6 +48,9 @@ app.post("/test2", (req, res) => {
 		.then(results => {
 			const sourceLang = results[1].data.translations[0].detectedSourceLanguage;
 			const translation = results[0];
+
+			logs.push('Original message: ' + originalMessage);
+			logs.push('Translated message: ' + translation);
 
 			request
 				.analyseText(translation)
@@ -69,7 +77,9 @@ function sendMessageToChat(conversationId, message, lang) {
 		.translate(message, lang)
 		.then(results => {
 			const translationBack = results[0];
-			console.log(`Translation back: ${translationBack}`);
+
+			logs.push('Original answer: ' + message);
+			logs.push('Translated answer: ' + translationBack);
 
 			superagent
 				.post('https://api.recast.ai/connect/v1/conversations/'+conversationId+'/messages')
