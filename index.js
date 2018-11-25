@@ -35,6 +35,7 @@ app.use(bodyParser.json());
 
 app.post("/test2", (req, res) => {
 	const originalMessage = req.body.nlp.source;
+	console.log(originalMessage);
 	const conversationId = req.body.conversation.id;
 
 	translate
@@ -52,7 +53,9 @@ app.post("/test2", (req, res) => {
 						sendMessageToChat(conversationId, 'I will forward you to the agent', sourceLang);
 					} else {
 						intentsArray.sort((i1, i2) => i2.confidence - i1.confidence);
-						sendMessageToChat(conversationId, junctionInfoMap[intentsArray[0].slug], sourceLang);
+						let intentMessage = junctionInfoMap[intentsArray[0].slug];
+						console.log(intentMessage);
+						sendMessageToChat(conversationId, intentMessage, sourceLang);
 					}
 					res.json({});
 				});
