@@ -15,7 +15,7 @@ const junctionInfoMap = require("./Resources/Data/JunctionInfo.js");
 const {Translate} = require('@google-cloud/translate');
 
 // Your Google Cloud Platform project ID
-const projectId = 'alien-paratext-223508';
+const projectId = 'myworkshopproject-205211';
 
 // Instantiates a client
 const translate = new Translate({
