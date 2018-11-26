@@ -1,9 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const app = express()
 const serveStatic = require('serve-static')
 const port = process.env.PORT || 3000
 const http = require("http")
-const BOT_TOKEN = '40d5fa3351bbc08183f3e9b3f92fba80'
+const BOT_TOKEN = process.env.BOT_TOKEN;
 const superagent = require('superagent');
 const bodyParser = require("body-parser");
 var recastai = require('recastai').default
@@ -15,7 +16,7 @@ const junctionInfoMap = require("./Resources/Data/JunctionInfo.js");
 const {Translate} = require('@google-cloud/translate');
 
 // Your Google Cloud Platform project ID
-const projectId = 'myworkshopproject-205211';
+const projectId = process.env.GOOGLE_PROJECT_ID;
 
 // Instantiates a client
 const translate = new Translate({
